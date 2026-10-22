@@ -1,0 +1,121 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tracemalloc-mastery"
+version = "1.0.0"
+description = "God-tier tracemalloc memory analysis toolkit - covers 99.99% of tracemalloc concepts"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "tracemalloc_mastery", email = "dev@example.com"}
+]
+keywords = [
+    "tracemalloc", "memory", "profiling", "leak-detection", 
+    "performance", "analysis", "debugging"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Debuggers",
+    "Topic :: Software Development :: Profiling",
+]
+dependencies = [
+    "psutil>=5.9.0",
+]
+
+[project.optional-dependencies]
+visualization = [
+    "matplotlib>=3.5.0",
+    "squarify>=0.4.3",
+]
+profiling = [
+    "py-spy>=0.3.0",
+    "memray>=1.0.0",
+    "objgraph>=3.5.0",
+    "pympler>=1.0.1",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+all = [
+    "matplotlib>=3.5.0",
+    "squarify>=0.4.3",
+    "py-spy>=0.3.0",
+    "memray>=1.0.0",
+    "objgraph>=3.5.0",
+    "pympler>=1.0.1",
+]
+
+[project.entry-points]
+console_scripts = [
+    "tracemalloc-mastery = tracemalloc_mastery.cli:main",
+    "tmm = tracemalloc_mastery.cli:main",
+]
+
+[project.urls]
+Homepage = "https://github.com/example/tracemalloc-mastery"
+Repository = "https://github.com/example/tracemalloc-mastery"
+Issues = "https://github.com/example/tracemalloc-mastery/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tracemalloc_mastery*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = [
+    "E", "F", "I", "N", "W", "UP", "B", "C4", "SIM", "T20"
+]
+ignore = [
+    "E501",  # Line too long
+    "T201",  # print statement
+    "T203",  # pyplot
+]
+[tool.ruff.per-file-ignores]
+"examples/*.py" = ["T201"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 100
+target-version = ["py38"]
+
+[tool.coverage.run]
+source = ["tracemalloc_mastery"]
+omit = ["*/tests/*", "*/examples/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
